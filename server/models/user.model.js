@@ -47,10 +47,6 @@ module.exports = (sequelize, DataTypes) => {
     longitudUser:{
       allowNull: false,
       type: DataTypes.DOUBLE
-    },
-    tokenUser:{
-      allowNull: true,
-      type: DataTypes.STRING
     }
   }, {
     freezeTableName: true,
