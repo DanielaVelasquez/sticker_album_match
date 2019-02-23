@@ -27,4 +27,7 @@ The response is as follows:
 |Status Code|Field Code|Error Code|Description|
 |---|---|---|---|
 |`200`|||Successful|
+|`200`|200|103|Sticker state is not valid|
+|`200`|300|103|Sticker doesn´t exists or it is in the wrong album|
+|`200`|100|103|User not found|
 |`500`|||Internal server error|

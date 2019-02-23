@@ -15,9 +15,19 @@
 |104|Datatype invalid|
 |105|Value must be **Boolean**|
 
-#### User
+#### user
 |Field|Field code|
 |---|---|
 |userName|100|
 |latitudUser|101|
 |latitudUser|102|
+
+#### sticker-state
+|Field|Field code|
+|---|---|
+|stickerState|200|
+
+#### sticker
+|Field|Field code|
+|---|---|
+|idSticker|300|

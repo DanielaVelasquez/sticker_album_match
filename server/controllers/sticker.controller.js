@@ -9,18 +9,26 @@ var models = require('../models');
  */
 var getSticker = (numberSticker, idAlbum) =>
 {
-    return models.sticker.findOne({
-        where: {
-          numberSticker
-        },
-        include: [{
-          model: models.album,
-          where:{
-            idAlbum
-          }
-        }]
-      });
-    
+  return new Promise((resolve, reject) =>{
+    models.sticker.findOne({
+      where: {
+        numberSticker
+      },
+      include: [{
+        model: models.album,
+        where:{
+          idAlbum
+        }
+      }]
+    })
+    .then((sticker)=>{
+      if(sticker)
+        resolve(sticker)
+      else
+        reject({field: 300, error: 103})
+    })
+    .catch((err)=>reject(err))
+  });
 }
 
 module.exports = {

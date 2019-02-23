@@ -1,4 +1,5 @@
 var handleError = (err, res)=>{
+    console.log("------>"+err)
     try {
         if (err.field) {
             res.status(400).send(err);

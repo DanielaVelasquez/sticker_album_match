@@ -8,14 +8,23 @@ var models = require('../models');
  */
 var getuser = (userName) =>
 {
-    return models.user.findOne({
-        where: {
-            userName
-        }
-      });
+    return new Promise((resolve, reject)=>{
+        models.user.findOne({
+            where: {
+                userName
+            }
+        })
+        .then((user)=>{
+            if(user)
+                resolve(user);
+            else
+                reject({field: 300, error: 103});
+        })
+        .catch((err)=>reject(err))
+    })
     
 }
 
 module.exports = {
     getuser
-  }
+}

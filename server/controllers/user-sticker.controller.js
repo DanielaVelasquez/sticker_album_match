@@ -7,38 +7,50 @@ var { GOT_STATE } = require('../util/states.util');
  * @param {object} sticker sticker in the user-sticker objet
  * @param {integer} userName user who owns the sticker
  */
-var findOrCreateUserSticker = (sticker, userName) =>
+var findOrCreateUserSticker = (sticker, user) =>
 {
     return models.userSticker.findOrCreate({
-        include: [{
-            model: models.sticker,
-            where: {
-                idSticker: sticker.get('idSticker')
-            }
-          },{
-            model: models.usuario,
-            where: {
-              userName
-            }
-          }]
+        where:{
+          stickerIdSticker: sticker.get('idSticker'),
+          userIdUser: user.get('idUser')
+        },
+        defaults:{
+          stickerStateIdStickerState: 1
+        }
       });
 }
 
-var updateUserSticker = (userSticker, newStickerState, user, stickerState,sticker) =>
+/**
+ * Updates the user-sticker, if the new state is 'got' then it is erased
+ * @param {*} userSticker the user-sticker
+ * @param {*} stickerState new state for the user-sticker
+ */
+var updateUserSticker = (userSticker,  stickerState) =>
 {
-  
+  var idUserSticker = userSticker.get('idUserSticker');
+  console.log("--->"+idUserSticker)
   //The new state is  GOT, then the user-sticker is erased
-  if(newStickerState == GOT_STATE)
+  if(stickerState.get('stickerState') == GOT_STATE)
   {
     return models.userSticker.destroy({
       where: {
-        idUserSticker: userSticker.get('idUserSticker')
+        idUserSticker
       }
     });
   }
   else
   {
     return userSticker.setStickerState(stickerState);
+    /*return models.userSticker.update({
+        stickerStateIdStickerState: stickerState.get('stickerState')
+      },{
+        where:{
+          idUserSticker
+        }
+      }
+
+    );*/
+    
   }
   
 }

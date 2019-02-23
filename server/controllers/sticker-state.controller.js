@@ -6,11 +6,20 @@ var models = require('../models');
  */
 var getStickerState = (stickerState) =>
 {
-  return models.stickerState.findOne({
-    where:{
-      stickerState
-    }
-  });
+  return new Promise((resolve, reject)=>{
+    models.stickerState.findOne({
+      where:{
+        stickerState
+      }
+    })
+    .then((stickerState)=>{
+      if(stickerState)
+        resolve(stickerState)
+      else  
+        reject({field: 200, error: 103})
+    })
+    .catch((err)=>reject(err))
+  })
 }
 
 module.exports = {
