@@ -19,17 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    emailUser:{
-      allowNull: false,
-      unique: true,
-      type: DataTypes.STRING,
-      validate: {
-        isEmail:{
-          args: true,
-          //msg: mensaje.correoErroneo()
-        }
-      }
-    },
     latitudUser:{
       allowNull: false,
       type: DataTypes.DOUBLE
