@@ -10,6 +10,7 @@ var userStickerController   = require('../controllers/user-sticker.controller');
 var userController          = require('../controllers/user.controller');
 var albumController         = require('../controllers/album.controller');
 var { GOT_STATE }           = require('../util/states.util');
+
 router.patch('/update/sticker',(req, res) => {
     const userSticker = req.body;
 
