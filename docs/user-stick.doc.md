@@ -79,6 +79,7 @@ Where:
 |---|---|---|---|
 |`200`|||Successful|
 |`200`|100|103|User not found|
+|`200`|400|103|Album not found|
 |`500`|||Internal server error|
 
 

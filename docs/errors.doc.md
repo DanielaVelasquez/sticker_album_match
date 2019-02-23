@@ -31,3 +31,9 @@
 |Field|Field code|
 |---|---|
 |idSticker|300|
+
+#### album
+|Field|Field code|
+|---|---|
+|idAlbum|400|
+|nameAlbum|401|
