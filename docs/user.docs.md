@@ -34,8 +34,8 @@ And the user's update in request body as follows:
 
 ```Javascript
 {
-    userName: 'jhondoe'
-    latitudUser : 19.23463
+    userName: 'jhondoe',
+    latitudUser : 19.23463,
     longitudUser: 23.46234
 }
 ```
@@ -66,8 +66,8 @@ The user's information goes in request body as follows:
 
 ```Javascript
 {
-    userName: 'jhondoe'
-    latitudUser : 19.23463
+    userName: 'jhondoe',
+    latitudUser : 19.23463,
     longitudUser: 23.46234
 }
 ```
