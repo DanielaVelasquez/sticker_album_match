@@ -97,8 +97,12 @@ var queryMatch = (lat,lon, idUser, idAlbum, maxDistance) =>{
           "ON otro_faltante.stickerIdSticker = yo_repetida.stickerIdSticker\n"+
           "ORDER BY userName, stickerState";
 }
-
-var consultaIntercambiarUser = (idUser1, idUser2) =>{
+/**
+ * Query to find the matching stickers between two users
+ * @param {number} idUser1 
+ * @param {number} idUser2 
+ */
+var matchUsers = (idUser1, idUser2) =>{
 
   return "SELECT * FROM\n"+
           "(SELECT  stickerIdSticker, userName, stickerState,\n"+
@@ -213,5 +217,6 @@ module.exports = {
   findOrCreateUserSticker,
   updateUserSticker,
   queryMatch,
-  buildListStickers
+  buildListStickers,
+  matchUsers
 }

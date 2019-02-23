@@ -18,7 +18,7 @@ var getuser = (userName) =>
             if(user)
                 resolve(user);
             else
-                reject({field: 300, error: 103});
+                reject({field: 100, error: 103});
         })
         .catch((err)=>reject(err))
     })

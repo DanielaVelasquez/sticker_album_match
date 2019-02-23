@@ -51,4 +51,18 @@ router.get('/matches/:username/:idAlbum/:distance',(req,res)=>{
     .catch((err)=> handleError(err, res));
 });
 
+router.post('/matches',(req,res)=>{
+    var username = req.body.username;
+    var otherusername = req.body.otherusername;
+    
+    Promise.all([userController.getuser(username), userController.getuser(otherusername)])
+    .then(([user1, user2])=>{
+        
+        const query = userStickerController.matchUsers(user1.get('idUser'), user2.get('idUser'));
+        return models.sequelize.query(query);
+    })
+    .then((results)=>res.send(userStickerController.buildListStickers(results[0])))
+    .catch((err)=> handleError(err, res));
+});
+
 module.exports = router;
