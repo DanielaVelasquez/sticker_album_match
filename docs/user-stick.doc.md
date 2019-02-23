@@ -8,7 +8,8 @@ The stickers information goes in request body as follows:
 {
     numberSticker: 1,
     idAlbum : 1,
-    stickerState: ''
+    stickerState: '',
+    userName : 'jhondoe'
 }
 ```
 

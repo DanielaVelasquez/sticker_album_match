@@ -1,24 +1,16 @@
-var models          = require('../models');
-var util = require('../util');
-var mensaje = require('../messages/estadoficha');
+var models = require('../models');
 
+/**
+ * Gets the sticker state object according to its name
+ * @param {string} stickerState sticker state name e.g: missing
+ */
 var getStickerState = (stickerState) =>
 {
-  return new Promise((resolve, reject) =>{
-    models.stickerState.findOne({
-      where:{
-        stickerState
-      }
-    })
-    .then(stickerState =>{
-      if(stickerState)
-        resolve(stickerState);
-      else 
-        reject();
-    })
-    .catch(err =>reject());
+  return models.stickerState.findOne({
+    where:{
+      stickerState
+    }
   });
-
 }
 
 module.exports = {
