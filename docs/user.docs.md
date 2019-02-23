@@ -22,4 +22,70 @@ The response is as follows, exist would be 'true' if the username provided is re
 |`200`|Successful|
 |`500`|Internal server error|
 
+### PATCH /user/update/id/:id
+This request updates a user.  
+You should provide the id  to update as URL parameter e.g.
 
+```Html
+/user/update/id/1
+```
+
+And the user's update in request body as follows:
+
+```Javascript
+{
+    userName: 'jhondoe'
+    latitudUser : 19.23463
+    longitudUser: 23.46234
+}
+```
+
+The response is as follows:
+
+```Javascript
+{
+    field: fieldCode,
+    error: errorCode
+}
+```
+
+#### Field codes, error codes and status codesv
+
+|Status Code|Field Code|Error Code|Description|
+|---|---|---|---|
+|`200`|||Successful|
+|`400`|1|1|Missing data to process the request|
+|`400`|100|102|Username is taken|
+|`500`|||Internal server error|
+
+
+### POST /user/create
+This request creates a user. 
+
+The user's information goes in request body as follows:
+
+```Javascript
+{
+    userName: 'jhondoe'
+    latitudUser : 19.23463
+    longitudUser: 23.46234
+}
+```
+
+The response is as follows:
+
+```Javascript
+{
+    field: fieldCode,
+    error: errorCode
+}
+```
+
+#### Field codes, error codes and status codesv
+
+|Status Code|Field Code|Error Code|Description|
+|---|---|---|---|
+|`200`|||Successful|
+|`400`|1|1|Missing data to process the request|
+|`400`|100|102|Username is taken|
+|`500`|||Internal server error|
