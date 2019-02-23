@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
   album.associate = function(models) {
-    // associations can be defined here
+   
   };
   return album;
 };
