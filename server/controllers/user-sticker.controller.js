@@ -4,7 +4,7 @@ var { GOT_STATE } = require('../util/states.util');
 
 /**
  * Find or creates the user-sticker object from username ans sticker
- * @param {object} sticker sticker in the user-sticker objet
+ * @param {object} sticker sticker in the user-sticker object
  * @param {integer} userName user who owns the sticker
  */
 var findOrCreateUserSticker = (sticker, user) =>
@@ -28,7 +28,6 @@ var findOrCreateUserSticker = (sticker, user) =>
 var updateUserSticker = (userSticker,  stickerState) =>
 {
   var idUserSticker = userSticker.get('idUserSticker');
-  console.log("--->"+idUserSticker)
   //The new state is  GOT, then the user-sticker is erased
   if(stickerState.get('stickerState') == GOT_STATE)
   {
@@ -41,16 +40,6 @@ var updateUserSticker = (userSticker,  stickerState) =>
   else
   {
     return userSticker.setStickerState(stickerState);
-    /*return models.userSticker.update({
-        stickerStateIdStickerState: stickerState.get('stickerState')
-      },{
-        where:{
-          idUserSticker
-        }
-      }
-
-    );*/
-    
   }
   
 }
