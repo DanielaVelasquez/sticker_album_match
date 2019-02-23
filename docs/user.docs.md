@@ -64,7 +64,7 @@ The response is as follows:
 
 
 ### POST /user/create
-This request creates a user. 
+This request creates a user. When a new user is created all the stickers all the albums are assumed as 'got'.
 
 The user's information goes in request body as follows:
 
