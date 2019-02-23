@@ -56,6 +56,10 @@ The response is as follows:
 |`200`|||Successful|
 |`400`|1|1|Missing data to process the request|
 |`400`|100|102|Username is taken|
+|`400`|100|100|Username is too short, minimun 3 characters|
+|`400`|100|101|Username is too long, maximun 16 characters|
+|`400`|101|104|Latitud is not a number|
+|`400`|102|104|Longitude is not a number|
 |`500`|||Internal server error|
 
 
