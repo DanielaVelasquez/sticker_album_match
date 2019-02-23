@@ -2,7 +2,7 @@ var models = require('../models');
 
 const users = [
     {
-        userName: 'jhon',
+        userName: 'john',
         latitudUser: 42.264992, //home
         longitudUser: -71.164709
     },
