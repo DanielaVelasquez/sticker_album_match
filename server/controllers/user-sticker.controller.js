@@ -203,7 +203,7 @@ var buildListStickers = (results) =>{
   }
   return users;
 }
-
+//Creates the object of a sticker
 var buildSticker = (userName, forMe, forHim ) =>{
   
   return {
@@ -213,10 +213,60 @@ var buildSticker = (userName, forMe, forHim ) =>{
   }
 }
 
+/**
+ * Query to get all the stickers from a user in an album
+ * @param {number} idUsuario identifier of the user
+ * @param {number} idAlbum identifier of the album
+ */
+var getStickerFrom = (idUsuario, idAlbum ) =>{
+  return models.userSticker.findAll({
+    where: {
+      UserIdUser: idUsuario
+    },
+    include: [
+      {
+        model: models.sticker,
+        where: {
+          albumIdAlbum: idAlbum
+        }
+      }
+    ]
+  });
+}
+
+/**
+ * Creates from a list of object of usersticker a readable list
+ * where you can see which are the missing and repeated stickers
+ * @param {list} userStickers results from the query
+ * @returns {obj} result
+ * {
+ *  missingStickers: [...],
+ *  repeatedStickers : [...]
+ * }
+ */
+var createListUserSticker = (userStickers) =>{
+  missingStickers = []
+  repeatedStickers = []
+  for(index in userStickers)
+  {
+      var userSticker = userStickers[index];
+      var num = userSticker.sticker.numberSticker;
+      
+      if(userSticker.stickerStateIdStickerState == MISSING_STATE_ID)
+        missingStickers.push(num);
+      else if(userSticker.stickerStateIdStickerState == REPEATED_STATE_ID)
+        repeatedStickers.push(num);
+  }
+
+  return {missingStickers, repeatedStickers}
+}
+
 module.exports = {
   findOrCreateUserSticker,
   updateUserSticker,
   queryMatch,
   buildListStickers,
-  matchUsers
+  matchUsers,
+  getStickerFrom,
+  createListUserSticker
 }

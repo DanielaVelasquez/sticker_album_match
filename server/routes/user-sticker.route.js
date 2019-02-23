@@ -65,4 +65,19 @@ router.post('/matches',(req,res)=>{
     .catch((err)=> handleError(err, res));
 });
 
+router.get('/getStickers/username/album/:username/:idAlbum',(req, res)=>{
+    var username = req.params.username;
+    var idAlbum = req.params.idAlbum;
+
+    Promise.all([userController.getuser(username), albumController.getAlbum(idAlbum)])
+    .then(([user, album])=>{
+        return userStickerController.getStickerFrom(user.get('idUser'),idAlbum);
+    })
+    .then((userStickers)=>{
+        res.send(userStickerController.createListUserSticker(userStickers));
+    })
+    .catch((err)=> handleError(err, res));
+    
+})
+
 module.exports = router;
