@@ -40,16 +40,16 @@ var fill = () =>{
 
 var assignStickerToUser = () =>
 {
-    users[0].missing = [1, 2, 3, 4, 5];
+    users[0].missing = [1, 2, 3, 4, 5]; //jhon home
     users[0].repeated = [6, 7, 8];
 
-    users[1].missing = [1, 4, 7];
+    users[1].missing = [1, 4, 7]; // dorothy library
     users[1].repeated = [2, 5, 10];
 
-    users[2].missing = [3];
+    users[2].missing = [3]; //george school
     users[2].repeated = [1, 2, 7, 8, 9, 10];
 
-    users[3].missing = [2, 3, 4];
+    users[3].missing = [2, 3, 4]; //izzie central park
     users[3].repeated = [1];
 }
 

@@ -42,14 +42,20 @@ router.get('/matches/:username/:idAlbum/:distance',(req,res)=>{
     var idAlbum = req.params.idAlbum;
     var distance = req.params.distance;
 
-    Promise.all([userController.getuser(username), albumController.getAlbum(idAlbum)])
-    .then(([user, album])=>{
-        const query = userStickerController.queryMatch(user.get('latitudUser'), user.get('longitudUser'),
-                                                    user.get('idUser'),idAlbum,distance);
-        return models.sequelize.query(query);
-    })
-    .then((results)=>res.send(userStickerController.buildListStickers(results[0])))
-    .catch((err)=> handleError(err, res));
+    if(isNaN(parseFloat(distance)))
+        res.status(400).send({field: 1, error: 104});
+    else
+    {
+        Promise.all([userController.getuser(username), albumController.getAlbum(idAlbum)])
+        .then(([user, album])=>{
+            const query = userStickerController.queryMatch(user.get('latitudUser'), user.get('longitudUser'),
+                                                        user.get('idUser'),idAlbum,distance);
+            return models.sequelize.query(query);
+        })
+        .then((results)=>res.send(userStickerController.buildListStickers(results[0])))
+        .catch((err)=> handleError(err, res));
+    }
+    
 });
 
 router.post('/matches',(req,res)=>{

@@ -33,6 +33,57 @@ The response is as follows:
 |`500`|||Internal server error|
 
 
+
+
+
+### GET /userstick/matches/:username/:idAlbum/:distance
+Gets all the users who 'username' can interchange stickers with from the album with id 'idAlbum' in a distance of 'distance' kilometers.
+
+
+The request should be sent as the following example, where the username is jhondoe:
+
+The response is as follows in case of an error:
+
+```Javascript
+{
+    field: fieldCode,
+    error: errorCode
+}
+```
+The response is as follows if everything goes well:
+```Javascript
+{
+    [
+        {
+            userName: "jhondoe",
+            forHim: [2,3],
+            forMe: [1,4]
+        },
+        ...
+    ]
+}
+```
+
+Where:
+```Javascript
+{
+    userName: "Name of the user who I can interchange with",
+    forHim: "Stickers I have repeated and he needs",
+    forMe: "Stickers He has repeated and I need"
+}
+```
+
+
+#### Field codes, error codes and status codesv
+
+|Status Code|Field Code|Error Code|Description|
+|---|---|---|---|
+|`200`|||Successful|
+|`200`|100|103|User not found|
+|`200`|400|103|Album not found|
+|`200`|1|104|Distance is not a number|
+|`500`|||Internal server error|
+
 ### POST /userstick/matches
 Gets all the users who 'username' can interchange stickers with from the album with id 'idAlbum'.
 The users information goes in request body as follows:
