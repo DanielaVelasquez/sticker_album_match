@@ -2,7 +2,8 @@ const express            = require('express');
 var app                  = express();
 var bodyParser           = require('body-parser');
 var models               = require('./models');
-var userRoutes            = require('./routes/user.route');
+var userRoutes           = require('./routes/user.route');
+var albumRoutes           = require('./routes/album.route');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json({limit: 1048576}));
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 
 //Assign routes
 app.use('/user', userRoutes);
+app.use('/album', albumRoutes);
 
 //Sync with models
 models.sequelize.sync();
