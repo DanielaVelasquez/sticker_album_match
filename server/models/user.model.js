@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    nameUser:{
+    userName:{
       allowNull: false,
       unique: true,
       type: DataTypes.STRING,
@@ -16,16 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         len: {
           args: [3, 20],
           //msg: mensaje.nombreUserLongitud()
-        }
-      }
-    },
-    passwordUser:{
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        len: {
-          args: [3, 255],
-          //msg: mensaje.contrasenaLongitud()
         }
       }
     },
