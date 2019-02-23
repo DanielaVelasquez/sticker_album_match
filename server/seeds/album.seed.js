@@ -4,7 +4,7 @@ const albums = [
     {
         nameAlbum: 'FIFA 2018'
     },
-    {
+    /*{
         nameAlbum: 'FIFA 2014'
     },
     {
@@ -12,7 +12,7 @@ const albums = [
     },
     {
         nameAlbum : 'FIFA 2010'
-    },
+    },*/
 ]
 
 module.exports = {
