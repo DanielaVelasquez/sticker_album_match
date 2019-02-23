@@ -6,12 +6,22 @@ var userRoutes            = require('./routes/user.route');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json({limit: 1048576}));
-
-//Sync with models
-models.sequelize.sync();
+app.use((req, res, next) => {
+	res.removeHeader("X-Powered-By");
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Length, Accept, Content-Type');
+	if ('OPTIONS' === req.method) {
+		res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+		return res.send();
+	}
+	next();
+});
 
 //Assign routes
 app.use('/user', userRoutes);
+
+//Sync with models
+models.sequelize.sync();
 
 //Start the server
 var port = process.env.PORT || 1337;
