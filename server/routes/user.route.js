@@ -66,7 +66,7 @@ router.post('/create',(req,res)=>{
     {
         models.user.findOne({
             where: {
-                userName: user.username
+                userName: user.userName
             }
         })
         .then((userFound)=>{

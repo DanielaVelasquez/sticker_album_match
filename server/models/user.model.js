@@ -13,19 +13,34 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       type: DataTypes.STRING,
       validate:{
-        len: {
-          args: [3, 20],
-          //msg: mensaje.nombreUserLongitud()
+        validateLength: (userName) =>{
+            const length = userName.length;
+            if(length < 3)
+                return Promise.reject({field: 100, error: 100});
+            else if(length > 16)
+                return Promise.reject({field: 100, error: 101})
         }
       }
     },
     latitudUser:{
       allowNull: false,
-      type: DataTypes.DOUBLE
+      type: DataTypes.DOUBLE,
+      validate:{
+        validateDataType: (latitudUser) =>{
+          if(isNaN(parseFloat(latitudUser)))
+            return Promise.reject({field: 101, error: 104});
+        }
+      }
     },
     longitudUser:{
       allowNull: false,
-      type: DataTypes.DOUBLE
+      type: DataTypes.DOUBLE,
+      validate:{
+        validateDataType: (longitudUser) =>{
+          if(isNaN(parseFloat(longitudUser)))
+            return Promise.reject({field: 102, error: 104});
+        }
+      }
     }
   }, {
     freezeTableName: true,

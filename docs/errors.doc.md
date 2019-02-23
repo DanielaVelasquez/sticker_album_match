@@ -21,7 +21,7 @@
 |---|---|
 |userName|100|
 |latitudUser|101|
-|latitudUser|102|
+|longitudeUser|102|
 
 #### sticker-state
 |Field|Field code|
