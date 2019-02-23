@@ -131,4 +131,51 @@ Where:
 |`200`|400|103|Album not found|
 |`500`|||Internal server error|
 
+### GET /userstick/getStickers/username/stateSticke/album/:username/:idAlbum/:state
+Gets all the user's stickers from an album with an specific state, state must be one of the values: 
+['missing', 'repeated']
+
+The user's username, state and the album he wants to see are sent in the request as follows, where username is 'jhondoe' and 'idAlbum' is 1
+
+```Javascript
+/userstick/getStickers/username/stateSticke/album/jhondoe/1/missing
+```
+
+
+The response is as follows in case of an error:
+
+```Javascript
+{
+    field: fieldCode,
+    error: errorCode
+}
+```
+The response is as follows if everything goes well:
+```Javascript
+{
+    stickers: [
+        1, 2, 3
+    ]
+}
+```
+
+Where:
+```Javascript
+{
+    stickers: "stickers with the given state in the selected album"
+}
+```
+
+
+#### Field codes, error codes and status codesv
+
+|Status Code|Field Code|Error Code|Description|
+|---|---|---|---|
+|`200`|||Successful|
+|`200`|100|103|User not found|
+|`200`|400|103|Album not found|
+|`200`|200|103|State not found|
+|`200`|200|106|The given state is invalid, you must sent either 'missing' or 'repeated'|
+|`500`|||Internal server error|
+
 

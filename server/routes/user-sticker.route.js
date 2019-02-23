@@ -9,7 +9,7 @@ var stickerController       = require('../controllers/sticker.controller');
 var userStickerController   = require('../controllers/user-sticker.controller');
 var userController          = require('../controllers/user.controller');
 var albumController         = require('../controllers/album.controller');
-
+var { GOT_STATE }           = require('../util/states.util');
 router.patch('/update/sticker',(req, res) => {
     const userSticker = req.body;
 
@@ -75,6 +75,32 @@ router.get('/getStickers/username/album/:username/:idAlbum',(req, res)=>{
     })
     .then((userStickers)=>{
         res.send(userStickerController.createListUserSticker(userStickers));
+    })
+    .catch((err)=> handleError(err, res));
+    
+})
+
+router.get('/getStickers/username/stateSticke/album/:username/:idAlbum/:state',(req, res)=>{
+    var username = req.params.username;
+    var state = req.params.state;
+    var idAlbum = req.params.idAlbum;
+
+    if(state == GOT_STATE)
+        res.status(400).send({field: 200, error: 106});
+
+    Promise.all([userController.getuser(username), stickerStateController.getStickerState(state), albumController.getAlbum(idAlbum)])
+    .then(([user, stickerState, album])=>{
+        return userStickerController.getStickerFromState(user.get('idUser'), album.get('idAlbum'), stickerState.get('idStickerState'));
+    })
+    .then((stickers)=>{
+        numbers = []
+        for(index in stickers)
+        {
+            var sticker = stickers[index];
+            var num = sticker.sticker.numberSticker;
+            numbers.push(num);
+        }
+        res.send({stickers: numbers});
     })
     .catch((err)=> handleError(err, res));
     

@@ -14,6 +14,7 @@
 |103|Resource doesn't exist|
 |104|Datatype invalid|
 |105|Value must be **Boolean**|
+|106|Value invalid|
 
 #### user
 |Field|Field code|

@@ -233,6 +233,28 @@ var getStickerFrom = (idUsuario, idAlbum ) =>{
     ]
   });
 }
+/**
+ * Query to get all the usersticker from a user, according to an album an a state
+ * @param {*} idUser user's identifieer
+ * @param {*} idAlbum album's identifier
+ * @param {*} idStickerState state's identifier
+ */
+var getStickerFromState = (idUser, idAlbum, idStickerState) =>{
+  return models.userSticker.findAll({
+    where: {
+      userIdUser: idUser,
+      stickerStateIdstickerState: idStickerState
+    },
+    include: [
+      {
+        model: models.sticker,
+        where: {
+          albumIdAlbum: idAlbum
+        }
+      }
+    ]
+  });
+}
 
 /**
  * Creates from a list of object of usersticker a readable list
@@ -268,5 +290,6 @@ module.exports = {
   buildListStickers,
   matchUsers,
   getStickerFrom,
-  createListUserSticker
+  createListUserSticker,
+  getStickerFromState
 }
