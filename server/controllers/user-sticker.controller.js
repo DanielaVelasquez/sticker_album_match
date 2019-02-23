@@ -1,6 +1,8 @@
 
 var models = require('../models');
-var { GOT_STATE } = require('../util/states.util');
+var { GOT_STATE, REPEATED_STATE, MISSING_STATE , REPEATED_STATE_ID, MISSING_STATE_ID} = require('../util/states.util');
+
+const MAX_RESULT = 100;
 
 /**
  * Find or creates the user-sticker object from username ans sticker
@@ -44,7 +46,172 @@ var updateUserSticker = (userSticker,  stickerState) =>
   
 }
 
+/**
+ * Query to find all possible matches in a perimeter
+ * @param {} lat latitud of the current user
+ * @param {*} lon longitude of the current user
+ * @param {*} idUser id of the current user
+ * @param {*} idAlbum album where he wants to find the match
+ * @param {*} maxDistance maximun distance to find matches
+ */
+var queryMatch = (lat,lon, idUser, idAlbum, maxDistance) =>{
+
+  return  "SELECT * FROM\n"+
+          "(SELECT  stickerIdSticker, userName, stickerState,\n"+
+          "numberSticker, latitudUser, longitudUser,\n"+
+          calculateDistance(lat, lon)+"AS distance\n"+
+          "FROM userSticker\n"+
+          "INNER JOIN User ON idUser = userIdUser\n"+
+          "INNER JOIN stickerState ON stickerStateIdstickerState = idstickerState\n"+
+          "INNER JOIN sticker ON idSticker = stickerIdSticker\n"+
+          "WHERE stickerStateIdstickerState = "+REPEATED_STATE_ID+"\n"+
+          "AND userIdUser != "+idUser+"\n"+
+          "AND albumIdAlbum = "+idAlbum+"\n"+
+          "HAVING "+calculateDistance(lat, lon)+"<" +maxDistance+"\n"+
+          ") AS otro_repetida\n"+
+          "INNER JOIN\n"+
+          "(SELECT  stickerIdSticker\n"+
+          "FROM userSticker\n"+
+          "WHERE stickerStateIdstickerState = "+MISSING_STATE_ID+"\n"+
+          "AND userIdUser = "+idUser+") AS yo_faltante\n"+
+          "ON otro_repetida.stickerIdSticker = yo_faltante.stickerIdSticker\n"+
+          "UNION\n"+
+          "SELECT * FROM\n"+
+          "(SELECT  stickerIdSticker, userName, stickerState,\n"+
+          "numberSticker,latitudUser, longitudUser,\n"+
+          calculateDistance(lat, lon)+"AS distance\n"+
+          "FROM userSticker\n"+
+          "INNER JOIN User ON idUser = userIdUser\n"+
+          "INNER JOIN stickerState ON stickerStateIdstickerState = idstickerState\n"+
+          "INNER JOIN Sticker ON idSticker = stickerIdSticker\n"+
+          "WHERE stickerStateIdstickerState = "+MISSING_STATE_ID+"\n"+
+          "AND userIdUser != "+idUser+"\n"+
+          "AND ALbumIdAlbum = "+idAlbum+"\n"+
+          "HAVING "+calculateDistance(lat, lon)+"<" +maxDistance+"\n"+
+          ") AS otro_faltante\n"+
+          "INNER JOIN\n"+
+          "(SELECT  stickerIdSticker\n"+
+          "FROM userSticker\n"+
+          "WHERE stickerStateIdstickerState = "+REPEATED_STATE_ID+"\n"+
+          "AND userIdUser = "+idUser+") AS yo_repetida\n"+
+          "ON otro_faltante.stickerIdSticker = yo_repetida.stickerIdSticker\n"+
+          "ORDER BY userName, stickerState";
+}
+
+var consultaIntercambiarUser = (idUser1, idUser2) =>{
+
+  return "SELECT * FROM\n"+
+          "(SELECT  stickerIdSticker, userName, stickerState,\n"+
+          "numberSticker\n"+
+          "FROM userSticker\n"+
+          "INNER JOIN User ON idUser = userIdUser\n"+
+          "INNER JOIN stickerState ON stickerStateIdstickerState = idstickerState\n"+
+          "INNER JOIN Sticker ON idSticker = stickerIdSticker\n"+
+          "WHERE stickerStateIdstickerState = "+REPEATED_STATE_ID+"\n"+
+          "AND userIdUser = "+idUser2+"\n"+
+          ") AS otro_repetida\n"+
+          "INNER JOIN\n"+
+          "(SELECT  stickerIdSticker\n"+
+          "FROM userSticker\n"+
+          "WHERE stickerStateIdstickerState = "+MISSING_STATE_ID+"\n"+
+          "AND userIdUser = "+idUser1+") AS yo_faltante\n"+
+          "ON otro_repetida.stickerIdSticker = yo_faltante.stickerIdSticker\n"+
+          "UNION\n"+
+          "SELECT * FROM\n"+
+          "(SELECT  stickerIdSticker, userName, stickerState,\n"+
+          "numberSticker\n"+
+          "FROM userSticker\n"+
+          "INNER JOIN User ON idUser = userIdUser\n"+
+          "INNER JOIN stickerState ON stickerStateIdstickerState = idstickerState\n"+
+          "INNER JOIN Sticker ON idSticker = stickerIdSticker\n"+
+          "WHERE stickerStateIdstickerState = "+MISSING_STATE_ID+"\n"+
+          "AND userIdUser = "+idUser2+"\n"+
+          ") AS otro_faltante\n"+
+          "INNER JOIN\n"+
+          "(SELECT  stickerIdSticker\n"+
+          "FROM userSticker\n"+
+          "WHERE stickerStateIdstickerState = "+REPEATED_STATE_ID+"\n"+
+          "AND userIdUser = "+idUser1+") AS yo_repetida\n"+
+          "ON otro_faltante.stickerIdSticker = yo_repetida.stickerIdSticker\n"+
+          "ORDER BY userName, stickerState";
+
+}
+
+/**
+ * Query to calculate the distance from latitud and longitude
+ * @param {number} lat latitude
+ * @param {number} lon longitude
+ */
+var calculateDistance = (lat, lon) =>{
+  return "(acos(sin(radians(latitudUser)) * sin(radians("+lat+")) + "+
+         "cos(radians(latitudUser)) * cos(radians("+lat+")) *"+
+         "cos(radians(longitudUser) - radians("+lon+"))) * 6378)";
+}
+
+/**
+ * Takes the result from the query and put them into a list
+ * @param {list} results 
+ */
+var buildListStickers = (results) =>{
+
+  var users = [];
+  var forHim = [];
+  var forMe = [];
+  var user;
+  for(i in results)
+  {
+    var u = results[i];
+    var state = u.stickerState;
+
+    //First time
+    if(!user)
+    {
+      user = u.userName;
+    }
+    //If it is a new user
+    else if(user != u.userName)
+    {
+      
+      if(users.length + 1 == MAX_RESULT)
+      {
+        u = results[i -1];
+        break;
+      }
+      var ant = results[i -1];
+      var newuser = buildSticker(user, forMe, forHim)
+      users.push(newuser);
+
+      forHim = [];
+      forMe = [];
+      user = u.userName;
+    }
+
+    
+    if(state == MISSING_STATE)
+      forHim.push(u.numberSticker);
+    else
+      forMe.push(u.numberSticker);
+  }
+  if(user)
+  {
+    var newuser = buildSticker(user, forMe, forHim)
+    users.push(newuser);
+  }
+  return users;
+}
+
+var buildSticker = (userName, forMe, forHim ) =>{
+  
+  return {
+    userName,
+    forHim,
+    forMe
+  }
+}
+
 module.exports = {
   findOrCreateUserSticker,
-  updateUserSticker
+  updateUserSticker,
+  queryMatch,
+  buildListStickers
 }

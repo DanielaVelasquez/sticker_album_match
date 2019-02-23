@@ -35,4 +35,18 @@ router.patch('/update/sticker',(req, res) => {
     }
 });
 
+router.get('/matches/:username/:idAlbum/:distance',(req,res)=>{
+    var username = req.params.username;
+    var idAlbum = req.params.idAlbum;
+    var distance = req.params.distance;
+
+    userController.getuser(username).then((user)=>{
+        const query = userStickerController.queryMatch(user.get('latitudUser'), user.get('longitudUser'),
+                                                       user.get('idUser'),idAlbum,distance);
+        return models.sequelize.query(query);
+    })
+    .then((results)=>res.send(userStickerController.buildListStickers(results[0])))
+    .catch((err)=> handleError(err, res));
+});
+
 module.exports = router;
