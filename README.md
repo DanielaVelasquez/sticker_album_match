@@ -1,5 +1,5 @@
 # Sticker album app
-
+Sticker album app is an API that stem from the necessity of finding the missing stickers in an album.
 ### Requirements
 Software neeeded to run the application.
 

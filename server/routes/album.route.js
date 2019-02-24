@@ -7,7 +7,7 @@ const handleError    = require('../util/handle-error.util');
 router.get('/all',(req,res)=>{
     models.album.findAll()
         .then((albums)=>{
-            res.send({data: albums});
+            res.send(albums);
         })
         .catch((err)=>res.status(500).send());
 });

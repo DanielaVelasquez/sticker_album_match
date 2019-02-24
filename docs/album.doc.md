@@ -7,7 +7,7 @@ The response is as follows:
 
 ```Javascript
 {
-    data: [
+    [
         {
             idAlbum: 1,
             nameAlbum: 'Fifa 2018'
