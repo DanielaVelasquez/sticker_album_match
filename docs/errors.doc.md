@@ -16,6 +16,7 @@
 |105|Value must be **Boolean**|
 |106|Value invalid|
 
+### Field codes
 #### user
 |Field|Field code|
 |---|---|
