@@ -15,6 +15,9 @@ router.get('/all',(req,res)=>{
 router.get('/stickers/:idAlbum', (req, res)=>{
     var idAlbum = req.params.idAlbum;
 
+    if(isNaN(parseInt(idAlbum)))
+        res.status(400).send({field: 400, error: 104});
+
     albumController.getAlbum(idAlbum)
     .then((album)=>{
         return models.sticker.findAll({
