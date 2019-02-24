@@ -19,6 +19,10 @@ Software neeeded to run the application.
 
 - In case you need to change the port of the database , open the file on */server/config/config.json* and change the attribute *port* to the new port in the *development* object.
 
+- In case you need to change the username of the database , open the file on */server/config/config.json* and change the attribute *username* to the new username in the *development* object.
+
+- In case you need to change the password of the database , open the file on */server/config/config.json* and change the attribute *password* to the new password in the *development* object.
+
 ### Steps to execution
 
 1. Download the project
