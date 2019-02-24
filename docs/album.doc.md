@@ -1,4 +1,4 @@
-# User
+# Album
 
 ### GET /album/all
 Returns all available albums.
