@@ -62,6 +62,7 @@ User's location
 |izzie|40.799050|-73.953866|
 
 User's missing and repeated stickers
+
 |User|Missing|Repeated|
 |---|---|---|
 |john|1, 2, 3, 4, 5|6, 7, 8|
