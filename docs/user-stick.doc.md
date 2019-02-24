@@ -9,7 +9,7 @@ The stickers information goes in request body as follows:
     numberSticker: 1,
     idAlbum : 1,
     stickerState: '',
-    userName : 'jhondoe'
+    userName : 'johndoe'
 }
 ```
 
@@ -40,9 +40,9 @@ The response is as follows:
 Gets all the users who 'username' can interchange stickers with from the album with id 'idAlbum' in a distance of 'distance' kilometers.
 
 
-The request should be sent as the following example, where the username is jhondoe, idAlbum is 1 and distance is 20 kilometers:
+The request should be sent as the following example, where the username is johndoe, idAlbum is 1 and distance is 20 kilometers:
 ```Javascript
-/userstick/matches/jhondoe/1/20
+/userstick/matches/johndoe/1/20
 ```
 The response is as follows in case of an error:
 
@@ -57,7 +57,7 @@ The response is as follows if everything goes well:
 {
     [
         {
-            userName: "jhondoe",
+            userName: "johndoe",
             forHim: [2,3],
             forMe: [1,4]
         },
@@ -92,12 +92,12 @@ The users information goes in request body as follows:
 
 ```Javascript
 {
-    username: 'jhondoe',
+    username: 'johndoe',
     otherusername : 'janedoe'
 }
 ```
 
-The request should be sent as the following example, where the username is jhondoe:
+The request should be sent as the following example, where the username is johndoe:
 
 The response is as follows in case of an error:
 
@@ -112,7 +112,7 @@ The response is as follows if everything goes well:
 {
     [
         {
-            userName: "jhondoe",
+            userName: "johndoe",
             forHim: [2,3],
             forMe: [1,4]
         },
@@ -143,10 +143,10 @@ Where:
 
 ### GET /userstick/getStickers/username/album/:username/:idAlbum
 Gets all the user's misssing and repeated stickers in an specific album.
-The user's username and the album he wants to see are sent in the request as follows, where username is 'jhondoe' and 'idAlbum' is 1
+The user's username and the album he wants to see are sent in the request as follows, where username is 'johndoe' and 'idAlbum' is 1
 
 ```Javascript
-/userstick/getStickers/username/album/jhondoe/1
+/userstick/getStickers/username/album/johndoe/1
 ```
 
 
@@ -188,10 +188,10 @@ Where:
 Gets all the user's stickers from an album with an specific state, state must be one of the values: 
 ['missing', 'repeated']
 
-The user's username, state and the album he wants to see are sent in the request as follows, where username is 'jhondoe' and 'idAlbum' is 1
+The user's username, state and the album he wants to see are sent in the request as follows, where username is 'johndoe' and 'idAlbum' is 1
 
 ```Javascript
-/userstick/getStickers/username/stateSticke/album/jhondoe/1/missing
+/userstick/getStickers/username/stateSticke/album/johndoe/1/missing
 ```
 
 
