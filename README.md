@@ -23,7 +23,7 @@ Software neeeded to run the application.
 
 - In case you need to change the password of the database , open the file on */server/config/config.json* and change the attribute *password* to the new password in the *development* object.
 
-### Steps to execution
+### Steps to executionconsider
 
 1. Download the project
 2. Open a terminal in the root of the project.
@@ -41,7 +41,7 @@ npm start
 
 To use the API, please open the *docs* folder, in there you will find all the available routes in the API.
 
-Please consider thath the file *errors* doesn't refer to any route and it just contains general information about errors and field codes.
+Please  be aware that the file *errors* doesn't refer to any route and it just contains general information about errors and field codes.
 
 ### Facts
 The application loads by default 4 users, 1 album with 10 stickers and missing and repeated stickers for each user. Every time the application starts, this default information is loaded again, previous changes will be deleted.
