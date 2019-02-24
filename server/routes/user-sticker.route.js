@@ -43,7 +43,7 @@ router.get('/matches/:username/:idAlbum/:distance',(req,res)=>{
     var distance = req.params.distance;
 
     if(isNaN(parseFloat(distance)))
-        res.status(400).send({field: 1, error: 104});
+        res.status(400).send({field: 400, error: 104});
     else
     {
         Promise.all([userController.getuser(username), albumController.getAlbum(idAlbum)])
@@ -76,6 +76,9 @@ router.get('/getStickers/username/album/:username/:idAlbum',(req, res)=>{
     var username = req.params.username;
     var idAlbum = req.params.idAlbum;
 
+    if(isNaN(parseInt(idAlbum)))
+        res.status(400).send({field: 400, error: 104});
+
     Promise.all([userController.getuser(username), albumController.getAlbum(idAlbum)])
     .then(([user, album])=>{
         return userStickerController.getStickerFrom(user.get('idUser'),idAlbum);
@@ -107,7 +110,7 @@ router.get('/getStickers/username/stateSticke/album/:username/:idAlbum/:state',(
             var num = sticker.sticker.numberSticker;
             numbers.push(num);
         }
-        res.send({stickers: numbers});
+        res.send(numbers);
     })
     .catch((err)=> handleError(err, res));
     

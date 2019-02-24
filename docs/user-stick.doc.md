@@ -83,7 +83,7 @@ Where:
 |`200`|||Successful|
 |`200`|100|103|User not found|
 |`200`|400|103|Album not found|
-|`200`|1|104|Distance is not a number|
+|`400`|400|104|Album's id must be an number|
 |`500`|||Internal server error|
 
 ### POST /userstick/matches
@@ -182,6 +182,7 @@ Where:
 |`200`|||Successful|
 |`200`|100|103|User not found|
 |`200`|400|103|Album not found|
+|`400`|400|104|Album's id must be an number|
 |`500`|||Internal server error|
 
 ### GET /userstick/getStickers/username/stateSticke/album/:username/:idAlbum/:state
@@ -205,19 +206,12 @@ The response is as follows in case of an error:
 ```
 The response is as follows if everything goes well:
 ```Javascript
-{
-    stickers: [
-        1, 2, 3
-    ]
-}
+[
+    1, 2, 3
+]
 ```
 
-Where:
-```Javascript
-{
-    stickers: "stickers with the given state in the selected album"
-}
-```
+Where the response are the stickers with the given state in the selected album.
 
 
 #### Field codes, error codes and status codesv
