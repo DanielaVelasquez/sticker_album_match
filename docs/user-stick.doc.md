@@ -40,8 +40,10 @@ The response is as follows:
 Gets all the users who 'username' can interchange stickers with from the album with id 'idAlbum' in a distance of 'distance' kilometers.
 
 
-The request should be sent as the following example, where the username is jhondoe:
-
+The request should be sent as the following example, where the username is jhondoe, idAlbum is 1 and distance is 20 kilometers:
+```Javascript
+/userstick/matches/jhondoe/1/20
+```
 The response is as follows in case of an error:
 
 ```Javascript
