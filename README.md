@@ -46,6 +46,10 @@ Please  be aware that the file *errors* doesn't refer to any route and it just c
 ### Facts
 The application loads by default 4 users, 1 album with 10 stickers and missing and repeated stickers for each user. Every time the application starts, this default information is loaded again, previous changes will be deleted.
 
+|idAlbum|stickers|
+|---|---|
+|1|1, 2, 3, 4, 5, 6, 7, 8, 9, 10|
+
 Users are:
 - john
 - dorothy
